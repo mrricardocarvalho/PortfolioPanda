@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const watchlistController = require('../controllers/watchlistController');
-import authMiddleware from '../../middleware/auth.js';
+const authMiddleware = require('../middleware/auth.js');
 
 router.get('/', authMiddleware, watchlistController.getAll); // Get all watchlist items
 router.get('/:id', authMiddleware, watchlistController.getById); // Get watchlist item by ID

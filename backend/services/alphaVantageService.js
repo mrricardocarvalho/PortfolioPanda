@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 const alphaVantageService = {
   async getStockData(symbol, functionName = 'TIME_SERIES_DAILY') {
@@ -25,4 +25,4 @@ const alphaVantageService = {
   },
 };
 
-export default alphaVantageService;
+module.exports = alphaVantageService;

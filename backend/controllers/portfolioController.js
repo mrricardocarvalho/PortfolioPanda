@@ -1,10 +1,10 @@
 const Portfolio = require('../models/portfolio');
-import alphaVantageService from '../services/alphaVantageService.js';
+const alphaVantageService = require('../services/alphaVantageService.js');
 
 module.exports = {
     getAll: async (req, res) => {
         try {
-            const portfolios = await Portfolio.find();
+            const portfolios = await Portfolio.find({ user: req.user.id }); // Filter by user
             res.json(portfolios);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -40,7 +40,11 @@ module.exports = {
               }
             }
 
-            const portfolio = new Portfolio(req.body);
+            const portfolioData = {
+                ...req.body,
+                user: req.user.id, // Add the user ID to the portfolio data
+            };
+            const portfolio = new Portfolio(portfolioData);
             await portfolio.save();
             res.status(201).json(portfolio);
         } catch (error) {

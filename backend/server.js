@@ -9,7 +9,11 @@ connectDB();
 
 app.use(express.json());
 
-// Define routes here later
+// Define routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/portfolios', require('./routes/portfolio'));
+app.use('/api/transactions', require('./routes/transaction'));
+app.use('/api/watchlists', require('./routes/watchlist'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

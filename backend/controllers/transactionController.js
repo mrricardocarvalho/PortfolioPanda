@@ -1,10 +1,20 @@
 const Transaction = require('../models/transaction');
-import alphaVantageService from '../services/alphaVantageService.js';
+const alphaVantageService = require('../services/alphaVantageService.js');
+
+const Portfolio = require('../models/portfolio');
 
 module.exports = {
     getAll: async (req, res) => {
         try {
-            const transactions = await Transaction.find();
+            // Find portfolios belonging to the user
+            const portfolios = await Portfolio.find({ user: req.user.id });
+
+            // Extract portfolio IDs
+            const portfolioIds = portfolios.map(portfolio => portfolio._id);
+
+            // Find transactions associated with those portfolios
+            const transactions = await Transaction.find({ portfolio: { $in: portfolioIds } });
+
             res.json(transactions);
         } catch (error) {
             res.status(500).json({ error: error.message });

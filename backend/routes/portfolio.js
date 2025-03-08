@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const portfolioController = require('../controllers/portfolioController');
-import authMiddleware from '../../middleware/auth.js';
+const authMiddleware = require('../middleware/auth.js');
 
 router.get('/', authMiddleware, portfolioController.getAll); // Get all portfolios
 router.get('/:id', authMiddleware, portfolioController.getById); // Get portfolio by ID
